@@ -1,4 +1,4 @@
-#include "..\..\Laba1\Laba1\Header.h"
+#include "..\..\server\Laba1\Header.h"
 
 int main()
 {

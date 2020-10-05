@@ -3,18 +3,18 @@
 int main()
 {
 	SerialPort port = SerialPort("COM2", 19200);
-	
+	/*
 	STARTUPINFO si;
 	ZeroMemory(&si, sizeof(STARTUPINFO));
 	si.cb = sizeof(STARTUPINFO);
 	PROCESS_INFORMATION procInfo;
 	ZeroMemory(&procInfo, sizeof(PROCESS_INFORMATION));
-	if (!CreateProcess(NULL, (char*)"F:\\5 sem\\TOKS\\Lab1\\client\\Debug\\client.exe", NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &procInfo))
+	if (!CreateProcess(NULL, (char*)"D:\\5 sem\\TOKS\\Lab1\\client\\Debug\\client.exe", NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &procInfo))
 	{
 		cout << "CreateProcess failed " << GetLastError() << endl; ;
 		return 0;
 	}
-	
+	*/
 	port.setBaudrate();
 	char tmp = '\0';
 	while (1)

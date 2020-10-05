@@ -17,4 +17,6 @@ public:
 private:
 	void setRate(DWORD);
 	HANDLE port_handle;
+	OVERLAPPED asyncRead;
+	OVERLAPPED asyncWrite;
 };

@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ public:
 	static string encodeMsg(string);
 	static string decodeMsg(string);
 	void showPckg(string);
-	string pack(string);
+	vector<string> pack(string);
 	string unpack(string);
 	Package();
 

@@ -1,3 +1,6 @@
-﻿  Source1.cpp
-F:\5 sem\TOKS\Laba1\Laba1\Source1.cpp(87,11): warning C4018: <: несоответствие типов со знаком и без знака
-  client.vcxproj -> F:\5 sem\TOKS\client\Debug\client.exe
+﻿  Package.cpp
+D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(6,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(13,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(23,20): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(35,20): warning C4018: <=: несоответствие типов со знаком и без знака
+  client.vcxproj -> D:\5 sem\TOKS\Lab1\client\Debug\client.exe

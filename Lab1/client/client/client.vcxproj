@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Laba1\Laba1\Header.h" />
-    <ClInclude Include="..\..\Laba1\Laba1\Package.h" />
+    <ClInclude Include="..\..\server\Laba1\Header.h" />
+    <ClInclude Include="..\..\server\Laba1\Package.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Laba1\Laba1\Package.cpp" />
-    <ClCompile Include="..\..\Laba1\Laba1\Source1.cpp" />
+    <ClCompile Include="..\..\server\Laba1\Package.cpp" />
+    <ClCompile Include="..\..\server\Laba1\Source1.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

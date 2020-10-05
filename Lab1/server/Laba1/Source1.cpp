@@ -8,27 +8,22 @@ SerialPort::SerialPort(string port_name, int baudrate)
 		0,
 		NULL,
 		OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL, 
+		FILE_FLAG_OVERLAPPED,
 		NULL);
 
-	if (this->port_handle == (HANDLE)-1) 
+	this->asyncRead = { 0 };
+	this->asyncRead.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+
+	this->asyncWrite = { 0 };
+	this->asyncWrite.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+
+
+	if (this->port_handle == (HANDLE)-1)
 	{
 		this->port_handle = 0;
 		exit(-1);
 	}
-	/*
-	SetupComm(this->port_handle, 1500, 1500);
-	COMMTIMEOUTS CommTimeOuts;
-	CommTimeOuts.ReadIntervalTimeout = 0xFFFFFFFF;
-	CommTimeOuts.ReadTotalTimeoutMultiplier = 0;
-	CommTimeOuts.ReadTotalTimeoutConstant = 5000;
-	CommTimeOuts.WriteTotalTimeoutMultiplier = 0;
-	CommTimeOuts.WriteTotalTimeoutConstant = 5000;
-	if (!SetCommTimeouts(this->port_handle, &CommTimeOuts)) {
-		this->port_handle = 0;
-		exit(-1);
-	}
-	*/
+
 	//настраиваем параметры работы для текущего устройства
 	DCB ComDCM;
 	memset(&ComDCM, 0, sizeof(ComDCM));
@@ -56,7 +51,7 @@ SerialPort::SerialPort(string port_name, int baudrate)
 	ComDCM.XoffLim = 128;
 
 	//установка параметров работы для текущего устройства
-	if (!SetCommState(this->port_handle, &ComDCM)) 
+	if (!SetCommState(this->port_handle, &ComDCM))
 	{
 		CloseHandle(this->port_handle);
 		this->port_handle = 0;
@@ -75,40 +70,49 @@ SerialPort::~SerialPort()
 
 void SerialPort::write(string msg)
 {
+	vector<string> packs;
 	int i = 0;
-	msg.pop_back();
 	Package package;
 	string encodedMsg = Package::encodeMsg(msg);
 	cout << "Encoded message: " << encodedMsg << endl;
-	msg = package.pack(encodedMsg);
-	cout << "Packed message: " << msg << endl;
-	msg.append("\n");
-	cout << endl;
-	while (i < msg.size())
+	packs = package.pack(encodedMsg);
+	for (auto pack : packs)
 	{
-		WriteFile(this->port_handle , &(msg[i++]), 1, NULL, NULL);
+		cout << "Packed message: " << pack.c_str() << endl;
+		WriteFile(this->port_handle , pack.c_str(), pack.size(), NULL, &this->asyncWrite);
+		WaitForSingleObject(asyncWrite.hEvent, INFINITE);
 	}
 }
 
 string SerialPort::read()
 {
-	char buf = '\0';
-	string msg;
+	char buf[49] = "";
+	string msg, strbuf;
 	Package package;
-	
-	DWORD bytesReaded;
-	do 
-	{
-		ReadFile(this->port_handle, &buf, 1, &bytesReaded, NULL);
-		if (buf == '\n') break;
-		msg += buf;
-	} while (1);
+	unsigned long state = 0;
 
-	msg = package.unpack(msg);
-	cout << "Unpacked message: " << msg << endl;
-	msg = Package::decodeMsg(msg);
-	cout << "Decoded message: " << msg << endl;
-	return msg;
+	if (SetCommMask(this->port_handle, EV_RXCHAR)) {
+
+		WaitCommEvent(this->port_handle, &state, &asyncRead);
+
+		DWORD bytesReaded;
+		do
+		{
+			WaitForSingleObject(asyncRead.hEvent, INFINITE);
+			ReadFile(this->port_handle, &buf, 11, &bytesReaded, &asyncRead);
+			WaitForSingleObject(asyncRead.hEvent, INFINITE);
+			strbuf = Package::encodeMsg(buf);
+			strbuf = package.unpack(strbuf);
+			cout << "Unpacked message: " << strbuf << endl;
+			strbuf = Package::decodeMsg(strbuf);
+			cout << "Decoded message: " << strbuf << endl;
+			msg += strbuf;
+			if (strbuf.find("\n") != -1) break;
+			strbuf = "";
+		} while (1);
+
+		return msg;
+	}
 }
 
 void SerialPort::setBaudrate() 
