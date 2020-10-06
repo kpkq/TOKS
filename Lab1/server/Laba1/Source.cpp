@@ -2,8 +2,10 @@
 
 int main()
 {
+	//cout << (int)'\n';
+	// ?  
 	SerialPort port = SerialPort("COM2", 19200);
-	/*
+	
 	STARTUPINFO si;
 	ZeroMemory(&si, sizeof(STARTUPINFO));
 	si.cb = sizeof(STARTUPINFO);
@@ -14,7 +16,7 @@ int main()
 		cout << "CreateProcess failed " << GetLastError() << endl; ;
 		return 0;
 	}
-	*/
+	
 	port.setBaudrate();
 	char tmp = '\0';
 	while (1)

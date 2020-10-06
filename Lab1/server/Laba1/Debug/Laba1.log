@@ -1,6 +1,3 @@
-﻿  Package.cpp
-D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(6,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(13,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(23,20): warning C4018: <=: несоответствие типов со знаком и без знака
-D:\5 sem\TOKS\Lab1\server\Laba1\Package.cpp(35,20): warning C4018: <=: несоответствие типов со знаком и без знака
+﻿  Source1.cpp
+D:\5 sem\TOKS\Lab1\server\Laba1\Source1.cpp(116): warning C4715: SerialPort::read: значение возвращается не при всех путях выполнения
   Laba1.vcxproj -> D:\5 sem\TOKS\Lab1\server\Debug\Laba1.exe

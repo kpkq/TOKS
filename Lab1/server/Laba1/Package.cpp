@@ -36,11 +36,15 @@ vector<string> Package::pack(string encodedMsg)
 	{
 		packs.push_back("");
 		string packedMsg(encodedMsg.substr(i*PACKET_SIZE, PACKET_SIZE));
+		int poz = 0;
 		while (1)
 		{
-			int poz = packedMsg.find(this->beginFlag);
+			poz = packedMsg.find("111111", poz);
 			if (poz != -1)
-				packedMsg.insert(poz + 1, "1");
+			{
+				packedMsg.insert(poz, "1");
+				poz += 6;
+			}
 			else break;
 		}
 		while (packedMsg.size() != PACKET_SIZE + 8) packedMsg.push_back('0');
@@ -63,13 +67,15 @@ string Package::unpack(string rawData)
 	int ones = 0;
 	for (auto digit : rawData) if (digit == '1') ones++;
 	if (ones % 2 != parityBit) return "";
+	poz = 0;
 	while (1)
 	{
-		int poz = rawData.find(this->bitStuffed);
+		poz = rawData.find("1111111", poz);
 		if (poz != -1)
 		{
-			rawData.erase(poz + 7, 1);
+			rawData.erase(poz, 1);
 			rawData.push_back('0');
+			poz += 6;
 		}
 		else break;
 	}
