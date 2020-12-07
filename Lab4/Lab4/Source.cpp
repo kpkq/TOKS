@@ -13,7 +13,6 @@ void transmitter(string data) {
 
 	int attempts;
 	int k;
-	int shift = 0;
 
 	for(auto msg: data) {
 
@@ -37,8 +36,6 @@ void transmitter(string data) {
 			}
 			Sleep((rand() % ((int)pow(2, attempts) - 1)) * 25);    // случайная задержка
 		}
-
-		shift++;
 	}
 
 	chanel = ' ';

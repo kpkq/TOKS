@@ -1,0 +1,4 @@
+﻿  main.cpp
+F:\5 sem\TOKS\Lab5\Lab5\main.cpp(6,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+F:\5 sem\TOKS\Lab5\Lab5\main.cpp(11,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Lab5.vcxproj -> F:\5 sem\TOKS\Lab5\Debug\Lab5.exe
